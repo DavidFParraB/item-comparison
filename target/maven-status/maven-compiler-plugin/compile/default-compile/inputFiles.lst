@@ -1,0 +1,15 @@
+/home/davidbeltran/Documentos/Personal/WorkSpace/Meli/item-comparison/src/main/java/com/hackerrank/sample/service/FilterService.java
+/home/davidbeltran/Documentos/Personal/WorkSpace/Meli/item-comparison/src/main/java/com/hackerrank/sample/service/impl/ModelServiceImpl.java
+/home/davidbeltran/Documentos/Personal/WorkSpace/Meli/item-comparison/src/main/java/com/hackerrank/sample/controller/request/Filter.java
+/home/davidbeltran/Documentos/Personal/WorkSpace/Meli/item-comparison/src/main/java/com/hackerrank/sample/model/Model.java
+/home/davidbeltran/Documentos/Personal/WorkSpace/Meli/item-comparison/src/main/java/com/hackerrank/sample/Application.java
+/home/davidbeltran/Documentos/Personal/WorkSpace/Meli/item-comparison/src/main/java/com/hackerrank/sample/service/ModelService.java
+/home/davidbeltran/Documentos/Personal/WorkSpace/Meli/item-comparison/src/main/java/com/hackerrank/sample/exception/NoSuchResourceFoundException.java
+/home/davidbeltran/Documentos/Personal/WorkSpace/Meli/item-comparison/src/main/java/com/hackerrank/sample/model/util/FilterParser.java
+/home/davidbeltran/Documentos/Personal/WorkSpace/Meli/item-comparison/src/main/java/com/hackerrank/sample/service/impl/FilterStringStrategy.java
+/home/davidbeltran/Documentos/Personal/WorkSpace/Meli/item-comparison/src/main/java/com/hackerrank/sample/model/Characteristic.java
+/home/davidbeltran/Documentos/Personal/WorkSpace/Meli/item-comparison/src/main/java/com/hackerrank/sample/service/impl/FilterNumericStrategy.java
+/home/davidbeltran/Documentos/Personal/WorkSpace/Meli/item-comparison/src/main/java/com/hackerrank/sample/exception/BadResourceRequestException.java
+/home/davidbeltran/Documentos/Personal/WorkSpace/Meli/item-comparison/src/main/java/com/hackerrank/sample/repository/ModelRepository.java
+/home/davidbeltran/Documentos/Personal/WorkSpace/Meli/item-comparison/src/main/java/com/hackerrank/sample/service/FilterStrategy.java
+/home/davidbeltran/Documentos/Personal/WorkSpace/Meli/item-comparison/src/main/java/com/hackerrank/sample/controller/ModelController.java
