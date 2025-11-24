@@ -8,28 +8,29 @@ import org.springframework.stereotype.Component;
 public class FilterNumericStrategy implements FilterStrategy {
 
   @Override
-  public boolean aplicaPara(String clave) {
-    return clave.equalsIgnoreCase("price") || clave.equalsIgnoreCase("size") || clave.equalsIgnoreCase("rating");
+  public boolean applyBy(String key) {
+    return key.equalsIgnoreCase("price") || key.equalsIgnoreCase("size") || key.equalsIgnoreCase("rating");
   }
 
   @Override
-  public boolean evaluar(Object valorArticulo, String operador, Object valorReferencia) {
-    log.info("Evaluando filtro numerico:, operador={}, valorArticulo={}, valorReferencia={}", operador, valorArticulo, valorReferencia);
+  public boolean validate(Object itemValue, String operator, Object referenceValue) {
+    log.info("Evaluando filtro numerico:, operador={}, valorArticulo={}, valorReferencia={}",
+        operator, itemValue, referenceValue);
     try {
-      double artValue = Double.parseDouble(valorArticulo.toString());
-      double refValue = Double.parseDouble(valorReferencia.toString());
+      double artValue = Double.parseDouble(itemValue.toString());
+      double refValue = Double.parseDouble(referenceValue.toString());
 
-      switch (operador.toUpperCase()) {
-        case "MAYOR_QUE": // >
-          return artValue > refValue;
-        case "MENOR_QUE": // <
-          return artValue < refValue;
-        case "IGUAL": // =
-          return artValue == refValue;
-        default:
+      return switch (operator.toUpperCase()) {
+        case "MAYOR_QUE" -> // >
+            artValue > refValue;
+        case "MENOR_QUE" -> // <
+            artValue < refValue;
+        case "IGUAL" -> // =
+            artValue == refValue;
+        default ->
           // Manejo de error o estrategia no soportada
-          return false;
-      }
+            false;
+      };
     } catch (NumberFormatException e) {
       log.error("Error al convertir los valores a Double: {}", e.getMessage());
       return false;

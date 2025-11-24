@@ -10,22 +10,17 @@ import org.springframework.stereotype.Component;
 public class FilterStringStrategy implements FilterStrategy {
 
   @Override
-  public boolean aplicaPara(String clave) {
-    return clave.equalsIgnoreCase("technology") || clave.equalsIgnoreCase("resolution");
+  public boolean applyBy(String key) {
+    return key.equalsIgnoreCase("technology") || key.equalsIgnoreCase("resolution") || key.equalsIgnoreCase("brand");
   }
 
   @Override
-  public boolean evaluar(Object valorArticulo, String operador, Object valorReferencia) {
-    log.info("Evaluando filtro String:, operador={}, valorArticulo={}, valorReferencia={}",
-        operador, valorArticulo, valorReferencia);
-    try {
-      if ("IGUAL".equalsIgnoreCase(operador)) { // =
-        return valorArticulo.toString().equalsIgnoreCase(valorReferencia.toString());
-      }
-      return false;
-    } catch (NumberFormatException e) {
-      log.error("Error al convertir los valores a Double: {}", e.getMessage());
-      return false;
+  public boolean validate(Object itemValue, String operator, Object referenceValue) {
+    log.info("Filter: operator={}, itemValue={}, referenceValue={}",
+        operator, itemValue, referenceValue);
+    if ("IGUAL".equalsIgnoreCase(operator)) { // =
+      return itemValue.toString().equalsIgnoreCase(referenceValue.toString());
     }
+    return false;
   }
 }

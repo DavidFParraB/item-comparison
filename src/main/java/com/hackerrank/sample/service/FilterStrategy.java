@@ -3,16 +3,17 @@ package com.hackerrank.sample.service;
 public interface FilterStrategy {
 
   /**
-   * Define si esta estrategia puede manejar la CLAVE de especificación (ej. "Precio", "RAM").
+   * Define whether this strategy can handle the specification KEY (e.g., "Price", "RAM").
    */
-  boolean aplicaPara(String clave);
+  boolean applyBy(String key);
 
   /**
-   * Evalúa si el valor del artículo cumple con la condición de filtrado.
-   * @param valorArticulo El valor del campo del artículo (ej. 1200.00).
-   * @param operador El tipo de comparación (ej. ">", "<", "=").
-   * @param valorReferencia El valor contra el que se compara (ej. 500.00).
-   * @return true si el artículo cumple la condición.
+   * Evaluates whether the item value meets the filtering condition.
+   *
+   * @param itemValue      The value of the item field (e.g., 1200.00).
+   * @param operator       The comparison type (e.g., ">", "<", "=").
+   * @param referenceValue The value to compare against (e.g., 500.00).
+   * @return true if the item meets the condition.
    */
-  boolean evaluar(Object valorArticulo, String operador, Object valorReferencia);
+  boolean validate(Object itemValue, String operator, Object referenceValue);
 }

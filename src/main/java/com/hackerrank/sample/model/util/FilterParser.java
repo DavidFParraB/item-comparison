@@ -1,7 +1,7 @@
 package com.hackerrank.sample.model.util;
 
 
-import com.hackerrank.sample.controller.request.Filter;
+import com.hackerrank.sample.model.Filter;
 import java.util.ArrayList;
 import java.util.List;
 
