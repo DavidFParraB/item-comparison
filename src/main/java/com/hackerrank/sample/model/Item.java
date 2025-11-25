@@ -1,6 +1,7 @@
 package com.hackerrank.sample.model;
 
 import jakarta.persistence.CollectionTable;
+import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
@@ -24,8 +25,11 @@ public class Item implements Serializable {
   private String name;
   private String url;
   private String description;
+  @Column(name = "price", nullable = false)
   private Double price;
-  private String rating;
+  @Column(name = "rating", nullable = false)
+  private Double rating;
+  @Column(name = "category", nullable = false)
   private String category;
   @ElementCollection
   @CollectionTable(name = "ITEM_CHARACTERISTICS", joinColumns = @JoinColumn(name = "item_id"))

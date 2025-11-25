@@ -1,3 +1,4 @@
+
 package com.hackerrank.sample.repository;
 
 import com.hackerrank.sample.model.Item;
@@ -11,5 +12,11 @@ public interface ItemRepository extends JpaRepository<Item, String> {
     @Transactional
     void deleteById(String id);
 
+    /**
+     * Retrieves a list of items that belong to the specified category.
+     *
+     * @param category the category of items to retrieve
+     * @return a list of items that belong to the specified category
+     */
     List<Item> findByCategory(String category);
 }

@@ -4,6 +4,7 @@ import com.hackerrank.sample.exception.BadResourceRequestException;
 import com.hackerrank.sample.exception.NoSuchResourceFoundException;
 import com.hackerrank.sample.model.Item;
 import com.hackerrank.sample.repository.ItemRepository;
+import com.hackerrank.sample.service.FilterService;
 import com.hackerrank.sample.service.ItemService;
 import java.util.List;
 import java.util.Map;
@@ -16,8 +17,8 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class ItemServiceImpl implements ItemService {
 
-  private ItemRepository itemRepository;
-  private FilterServiceImpl filterService;
+  private final ItemRepository itemRepository;
+  private final FilterService filterService;
 
   @Override
   public void deleteAllItems() {
@@ -26,6 +27,12 @@ public class ItemServiceImpl implements ItemService {
 
   @Override
   public void deleteItemById(String id) {
+    Optional<Item> existingItem = itemRepository.findById(id);
+
+    if (existingItem.isEmpty()) {
+      throw new NoSuchResourceFoundException("No Item with given id found.");
+    }
+
     itemRepository.deleteById(id);
   }
 
@@ -62,6 +69,13 @@ public class ItemServiceImpl implements ItemService {
     return filterService.applyFilter(filteredItems, filterStr);
   }
 
+  /**
+   * Retrieves filter options for items within a specified category.
+   *
+   * @param category the category of items for which to retrieve filter options.
+   * @return a map where the keys are filter criteria and the values are sets of possible values for
+   * each criterion.
+   */
   @Override
   public Map<String, Set<Object>> getFilterOptions(String category) {
     List<Item> items = itemRepository.findByCategory(category);

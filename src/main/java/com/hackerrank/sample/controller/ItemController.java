@@ -1,6 +1,8 @@
+
 package com.hackerrank.sample.controller;
 
 
+import com.hackerrank.sample.dto.ErrorResponseDTO;
 import com.hackerrank.sample.model.Item;
 import com.hackerrank.sample.service.ItemService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -15,7 +17,6 @@ import jakarta.validation.Valid;
 import java.util.Map;
 import java.util.Set;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,20 +24,15 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class ItemController {
 
-  private ItemService itemService;
-
-  @GetMapping("/")
-  @ResponseBody
-  @Operation(summary = "Home Page", description = "Returns the default home page message.")
-  public String home() {
-    return "Default Java 21 Project Home Page";
-  }
+  private final ItemService itemService;
 
   @PostMapping(value = "/item", consumes = "application/json")
   @ResponseStatus(HttpStatus.CREATED)
   @Operation(summary = "Create a new item", description = "Creates a new item with the provided details.")
   @ApiResponses(value = {
-      @ApiResponse(responseCode = "201", description = "Item created successfully")
+      @ApiResponse(responseCode = "201", description = "Item created successfully"),
+      @ApiResponse(responseCode = "400", description = "Item with same id exists.",
+          content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class)))
   })
   public void createNewItem(
       @RequestBody @Valid @Parameter(description = "Item object to be created", required = true,
@@ -59,7 +55,8 @@ public class ItemController {
   @Operation(summary = "Delete Item by ID", description = "Deletes a Item by its ID.")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "Item deleted successfully"),
-      @ApiResponse(responseCode = "404", description = "Item not found")
+      @ApiResponse(responseCode = "404", description = "Item not found",
+          content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class)))
   })
   public void deleteItemById(
       @Parameter(description = "ID of the Item to be deleted", required = true) @PathVariable String id) {
@@ -79,11 +76,12 @@ public class ItemController {
 
   @GetMapping("/item/{id}")
   @ResponseStatus(HttpStatus.OK)
-  @Operation(summary = "Get Item by ID", description = "Retrieves a Item by its ID.")
+  @Operation(summary = "Get Item by ID", description = "Retrieves an Item by its ID.")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "Item found",
           content = @Content(schema = @Schema(implementation = Item.class))),
-      @ApiResponse(responseCode = "404", description = "Item not found")
+      @ApiResponse(responseCode = "404", description = "Item not found",
+          content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class)))
   })
   public Item getItemById(
       @Parameter(description = "ID of the Item to be retrieved", required = true) @PathVariable String id) {
@@ -92,14 +90,31 @@ public class ItemController {
 
   @GetMapping("/item/filter")
   @ResponseStatus(HttpStatus.OK)
-  public List<Item> filterItems(@RequestParam String category, @RequestParam String criteria) {
+  @Operation(
+      summary = "Filter Items",
+      description = "Filters items based on the specified category and criteria."
+  )
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Filtered list of items",
+          content = @Content(array = @ArraySchema(schema = @Schema(implementation = Item.class)))),
+      @ApiResponse(responseCode = "400", description = "Invalid filter criteria",
+          content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class)))
+  })
+  public List<Item> filterItems(
+      @RequestParam @Parameter(description = "Category to filter items by", required = true) String category,
+      @RequestParam @Parameter(description = "Criteria to apply for filtering", required = true) String criteria) {
     return itemService.filterItems(category, criteria);
   }
 
   @GetMapping("/item/filter-options")
   @ResponseStatus(HttpStatus.OK)
   @Operation(summary = "Get filter options", description = "Retrieves available filter options based on Item characteristics.")
-  public Map<String, Set<Object>> getFilterOptions(@RequestParam String category) {
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "400", description = "Required request parameter",
+          content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class)))
+  })
+  public Map<String, Set<Object>> getFilterOptions(
+      @RequestParam @Parameter(description = "Category to filter items by", required = true) String category) {
     return itemService.getFilterOptions(category);
   }
 }

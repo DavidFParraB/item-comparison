@@ -1,5 +1,8 @@
 package com.hackerrank.sample.service;
 
+/**
+ * Defines the strategy for filtering items based on their characteristics.
+ */
 public interface FilterStrategy {
 
   /**
